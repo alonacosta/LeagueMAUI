@@ -13,7 +13,7 @@ namespace LeagueMAUI
             InitializeComponent();
             _apiService = apiService;
             _validator = validator;
-            MainPage = new NavigationPage(new RegisterPage(_apiService, _validator));
+            MainPage = new NavigationPage(new LoginPage(_apiService, _validator));
            
         }
     }

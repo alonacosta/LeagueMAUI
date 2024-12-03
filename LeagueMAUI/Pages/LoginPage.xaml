@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LeagueMAUI.Pages.LoginPage"
-             Title="LoginPage">
+             Title="LoginPage"
+             NavigationPage.HasNavigationBar="False">
     <Grid RowDefinitions="Auto, Auto, Auto, Auto, *"
        RowSpacing="20"
        Margin="20, 150, 20, 40">
@@ -12,24 +13,23 @@
             HeightRequest="100"
             WidthRequest="100"/>
         <Label Grid.Row="1"
-            Text="Welcome to Healthy and strong!"
-            TextColor="White"
+            Text="Welcome to Football League!"
+            TextColor="#343a40"
             FontAttributes="Bold"
             HorizontalOptions="Center"/>
 
         <Frame Grid.Row="2"
-            Padding="15"
-            BackgroundColor="#484E53">
+            Padding="15">
             <VerticalStackLayout>
                 <Entry Placeholder="Email"
                     x:Name="EntEmail"
-                    TextColor="White"                     
+                    TextColor="#343a40"                     
                     BackgroundColor="Transparent"
                     />
                 <Entry Placeholder="Password"
                     x:Name="EntPassword"
                     IsPassword="True"                      
-                    TextColor="White"/>
+                    TextColor="#343a40"/>
             </VerticalStackLayout>
         </Frame>
         <Button Grid.Row="3"
@@ -44,7 +44,7 @@
                  Spacing="2"
                  HorizontalOptions="Center"
                  VerticalOptions="EndAndExpand">
-            <Label Text="Forgot password ? " TextColor="#EEEEEE" />
+            <Label Text="Forgot password ? " TextColor="#343a40" />
             <Label Text="Recover password" TextColor="#ff0046" FontAttributes="Bold">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer x:Name="TapRecoverPassword"
