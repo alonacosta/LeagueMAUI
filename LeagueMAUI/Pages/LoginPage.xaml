@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LeagueMAUI.Pages.LoginPage"
+             Title="LoginPage">
+    <Grid RowDefinitions="Auto, Auto, Auto, Auto, *"
+       RowSpacing="20"
+       Margin="20, 150, 20, 40">
+        <Image Grid.Row="0"
+            Source="gymstart.png"
+            Aspect="AspectFit"
+            HeightRequest="100"
+            WidthRequest="100"/>
+        <Label Grid.Row="1"
+            Text="Welcome to Healthy and strong!"
+            TextColor="White"
+            FontAttributes="Bold"
+            HorizontalOptions="Center"/>
+
+        <Frame Grid.Row="2"
+            Padding="15"
+            BackgroundColor="#484E53">
+            <VerticalStackLayout>
+                <Entry Placeholder="Email"
+                    x:Name="EntEmail"
+                    TextColor="White"                     
+                    BackgroundColor="Transparent"
+                    />
+                <Entry Placeholder="Password"
+                    x:Name="EntPassword"
+                    IsPassword="True"                      
+                    TextColor="White"/>
+            </VerticalStackLayout>
+        </Frame>
+        <Button Grid.Row="3"
+             Text="Login"
+             FontSize="16"
+             FontAttributes="Bold"
+             x:Name="BtnSignIn"
+             BackgroundColor="#ff0046"
+             Clicked="BtnSignIn_Clicked"/>
+
+        <HorizontalStackLayout Grid.Row="4"
+                 Spacing="2"
+                 HorizontalOptions="Center"
+                 VerticalOptions="EndAndExpand">
+            <Label Text="Forgot password ? " TextColor="#EEEEEE" />
+            <Label Text="Recover password" TextColor="#ff0046" FontAttributes="Bold">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer x:Name="TapRecoverPassword"
+                            Tapped="TapRecoverPassword_Tapped"/>
+                </Label.GestureRecognizers>
+            </Label>
+        </HorizontalStackLayout>
+
+    </Grid>
+</ContentPage>

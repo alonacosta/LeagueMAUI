@@ -41,10 +41,9 @@
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
-
+		
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\football.svg" Color="#343A40" TintColor="#ebebec" BaseSize="128,128" />
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" />
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#343A40" TintColor="#EBEBEC" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -58,13 +57,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\Splash\splash.svg" />
-	</ItemGroup>
-
-	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Pages\LoginPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\RegisterPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>

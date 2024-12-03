@@ -1,12 +1,20 @@
-﻿namespace LeagueMAUI
+﻿using LeagueMAUI.Pages;
+using LeagueMAUI.Services;
+using LeagueMAUI.Validations;
+
+namespace LeagueMAUI
 {
     public partial class App : Application
     {
-        public App()
+        private readonly ApiService _apiService;
+        private readonly IValidator _validator;
+        public App(ApiService apiService, IValidator validator)
         {
             InitializeComponent();
-
-            MainPage = new AppShell();
+            _apiService = apiService;
+            _validator = validator;
+            MainPage = new NavigationPage(new RegisterPage(_apiService, _validator));
+           
         }
     }
 }

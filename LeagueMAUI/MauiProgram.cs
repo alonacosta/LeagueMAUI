@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using LeagueMAUI.Services;
+using LeagueMAUI.Validations;
+using Microsoft.Extensions.Logging;
 
 namespace LeagueMAUI
 {
@@ -18,6 +20,11 @@ namespace LeagueMAUI
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+
+            builder.Services.AddHttpClient();
+
+            builder.Services.AddSingleton<ApiService>();
+            builder.Services.AddSingleton<IValidator, Validator>();
 
             return builder.Build();
         }

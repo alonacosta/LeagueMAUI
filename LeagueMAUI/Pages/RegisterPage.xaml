@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LeagueMAUI.Pages.RegisterPage"
+             Title="RegisterPage"
+             NavigationPage.HasNavigationBar="False">
+    
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,*"
+          RowSpacing="20"
+          Margin="20,150,20,40">
+
+        <Image Grid.Row="0"
+        Source="ball.svg"
+        Aspect="AspectFit"              
+        HeightRequest="80"
+        WidthRequest="80" />
+
+        <Label Grid.Row="1"
+        Text="Hi!👋 Join us!"
+        FontAttributes="Bold"
+        HorizontalOptions="Center" />
+
+        <Frame Grid.Row="2"
+               Padding="15"
+               BackgroundColor="White">
+            <VerticalStackLayout>
+                <Entry Placeholder="First Name"
+                       x:Name="EntFirstName" />
+                <Entry Placeholder="Last Name"
+                       x:Name="EntLastName" />
+                <Entry Placeholder="Email"
+                       Keyboard="Email"
+                       x:Name="EntEmail" />
+                <Entry Placeholder="Phone Number"
+                       Keyboard="Telephone"
+                       x:Name="EntPhoneNumber" />
+                <Entry Placeholder="Password"
+                       IsPassword="True"
+                       x:Name="EntPassword" />
+                <Entry Placeholder="Confirm Password"
+                       IsPassword="True"
+                       x:Name="EntConfirm" />
+            </VerticalStackLayout>
+        </Frame>
+
+        <Button Grid.Row="3"
+                Text="Register now"
+                FontSize="18"
+                FontAttributes="Bold"
+                BackgroundColor="#ff0046"
+                x:Name="BtnSignup" 
+                Clicked="BtnSignup_Clicked"/>
+
+        <HorizontalStackLayout Grid.Row="4"
+                   Spacing="2" HorizontalOptions="Center"                      
+                   VerticalOptions="EndAndExpand">
+            <Label Text="Already have an account?" />
+            <Label Text="Click here" TextColor="#ff0046" FontAttributes="Bold">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer x:Name="TapLogin" Tapped="TapLogin_Tapped"/>
+                </Label.GestureRecognizers>
+            </Label>
+        </HorizontalStackLayout>
+
+    </Grid>
+</ContentPage>
