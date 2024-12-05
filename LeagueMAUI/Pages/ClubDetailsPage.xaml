@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LeagueMAUI.Pages.ClubDetailsPage"
+             Title="Club Details">
+    <VerticalStackLayout>
+        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto" 
+              ColumnDefinitions="*, *" 
+              Margin="20" 
+              RowSpacing="8"
+              ColumnSpacing="15">
+            <Image Grid.Row="0" Grid.ColumnSpan="2"
+                    x:Name="ImageClub"
+                    HeightRequest="100"
+                    Aspect="AspectFit"
+                    Margin="0, 15, 0, 0" />
+            <Label Grid.Row="1" 
+                   Grid.ColumnSpan="2" 
+                   x:Name="LblNameClub" 
+                   HorizontalOptions="Center"
+                   FontAttributes="Bold"
+                   FontSize="18"             
+                   Margin="0,15"/>
+
+            <Label Grid.Row="2" Grid.Column="0"
+             Text="Stadium"
+             FontAttributes="Bold"/>
+            <Label Grid.Row="2" Grid.Column="1"
+             x:Name="LblStadium" />
+
+            <Label Grid.Row="3" Grid.Column="0"
+             Text="Capacity"
+             FontAttributes="Bold"/>
+            <Label Grid.Row="3" Grid.Column="1"
+              x:Name="LblCapacity" />
+
+            <Label Grid.Row="4" Grid.Column="0"
+              Text="Head Coach"
+              FontAttributes="Bold"/>
+            <Label Grid.Row="4" Grid.Column="1"
+              x:Name="LblHeadCoach" />
+        </Grid> 
+        
+        <Grid RowDefinitions="Auto, Auto"> 
+        <Label Grid.Row="0" 
+                   Text="Our Team"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   Margin="0,40,0,20"
+                   HorizontalOptions="Center" />
+
+            <CollectionView x:Name="CvPlayers" Grid.Row="1" Margin="15,5">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Horizontal"
+                        
+                        HorizontalItemSpacing="10"
+                        VerticalItemSpacing="10" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border VerticalOptions="Center"
+                              StrokeShape="RoundRectangle 15,15,15,15"
+                              Padding="5, 20"
+                              WidthRequest="150">
+                            <Grid Padding="5" RowSpacing="20"
+                                 RowDefinitions="Auto, Auto">
+
+                                <Frame Grid.Row="0"
+                                     WidthRequest="70" HeightRequest="70"
+                                     CornerRadius="35"
+                                     IsClippedToBounds="True"
+                                     HorizontalOptions="Center"
+                                     VerticalOptions="Center">
+                                    <Image 
+                                         WidthRequest="70" HeightRequest="70"
+                                         Aspect="AspectFit"
+                                         Source="{Binding ImageUrl}"
+                                         />
+                                </Frame>
+
+                                <StackLayout Grid.Row="1"
+                                             VerticalOptions="Center"
+                                             HorizontalOptions="Center">
+                                    <Label Text="{Binding Name}"
+                                           FontSize="15"
+                                           FontAttributes="Bold"
+                                           TextColor="Black" />
+                                    <Label Text="{Binding PositionName}"
+                                           FontSize="13"
+                                           TextColor="Gray" />
+                                </StackLayout>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>

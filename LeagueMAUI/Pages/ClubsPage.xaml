@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LeagueMAUI.Pages.ClubsPage"
+             Title="Clubs">
+    <ScrollView>
+        <VerticalStackLayout>
+            <ActivityIndicator x:Name="loadIndicator"
+                IsRunning="false"
+                IsVisible="false"
+                Color="#212529"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
+
+            <CollectionView x:Name="CvClubs"                            
+                        SelectionMode="Single"
+                        Margin="10"
+                        SelectionChanged="CvClubs_SelectionChanged">
+
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical"
+                                Span="2"
+                                HorizontalItemSpacing="10"
+                                VerticalItemSpacing="10" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border VerticalOptions="Start"
+                            StrokeShape="RoundRectangle 15,15,15,15"
+                            Padding="10">
+                            <Grid RowSpacing="3"
+                              RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
+                                <Image Aspect="AspectFit"
+                                   HeightRequest="120"                                    
+                                   Source="{Binding ImageFullPath}"/>
+                                <Label Grid.Row="1"
+                                   FontAttributes="Bold"
+                                   FontSize="15" 
+                                   LineBreakMode="WordWrap"
+                                   MaxLines="2" 
+                                   Text="{Binding Name}" />
+                                <Label Grid.Row="2"                 
+                                   FontSize="14"
+                                   MaxLines="2" 
+                                  HeightRequest="40"
+                                   LineBreakMode="WordWrap"
+                                   Text="{Binding Stadium}"/>
+                                <!--<Label Grid.Row="3"                 
+                                   FontSize="14"   
+                                   Text="{Binding Capacity}"/>
+                            <Label Grid.Row="4"                 
+                                    FontSize="14"   
+                                     Text="{Binding HeadCoach}"/>-->
+                                <!--<Button Grid.Row="5"
+                                    Text="Team"
+                                    x:Name="BtnTeam"
+                                    FontAttributes="Bold"
+                                    BackgroundColor="#212529"
+                                    Clicked="BtnTeam_Clicked" 
+                                    CommandParameter="{Binding Id}"
+                                    />-->
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

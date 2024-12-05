@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"             
+             x:Class="LeagueMAUI.Pages.DashboardPage"
+             Title="Dashboard">
+   
+    <ContentPage.Content>     
+        <syncfusion:SfDataGrid x:Name="dataGridStatistics"
+                               AutoGenerateColumnsMode="None"  
+                               HeaderRowHeight="60"
+                               SortingMode="Single"                               
+                               ColumnWidthMode="Auto"
+                              >
+            <syncfusion:SfDataGrid.DefaultStyle>
+                <syncfusion:DataGridStyle HeaderRowBackground="#717579" HeaderRowTextColor="White"
+                                          HeaderRowFontSize="15" 
+                                          />
+            </syncfusion:SfDataGrid.DefaultStyle>
+            
+            <syncfusion:SfDataGrid.Columns>
+                <syncfusion:DataGridTextColumn MappingName="Position"
+                                               HeaderText="P" 
+                                               ColumnWidthMode="FitByHeader" 
+                                               Width="42"></syncfusion:DataGridTextColumn>
+                <syncfusion:DataGridImageColumn MappingName="ImageFullPath" 
+                                                HeaderText="I" ColumnWidthMode="FitByHeader" 
+                                                Width="42"></syncfusion:DataGridImageColumn>               
+                <syncfusion:DataGridTextColumn MappingName="ClubName"
+                                               HeaderText="Club" 
+                                               ColumnWidthMode="FitByHeader" 
+                                               Width="120"></syncfusion:DataGridTextColumn>                
+                <syncfusion:DataGridTextColumn MappingName="TotalMatches"
+                                               HeaderText="T" 
+                                               ColumnWidthMode="FitByHeader" 
+                                               Width="42"></syncfusion:DataGridTextColumn>
+                <syncfusion:DataGridTextColumn MappingName="Wins"
+                                               HeaderText="W" 
+                                               ColumnWidthMode="FitByHeader" 
+                                               Width="45"></syncfusion:DataGridTextColumn>
+                <syncfusion:DataGridTextColumn MappingName="Losses"                                
+                                               HeaderText="L" 
+                                               ColumnWidthMode="FitByHeader" 
+                                               Width="42"></syncfusion:DataGridTextColumn>
+                <syncfusion:DataGridTextColumn MappingName="Draws"                                
+                                               HeaderText="D" 
+                                               ColumnWidthMode="Fill" 
+                                               Width="42"></syncfusion:DataGridTextColumn>
+                <syncfusion:DataGridTextColumn MappingName="GoalsScored"                                
+                                               HeaderText="S" 
+                                               ColumnWidthMode="Fill" 
+                                               Width="42"></syncfusion:DataGridTextColumn>
+                <syncfusion:DataGridTextColumn MappingName="GoalsConceded"                                
+                                               HeaderText="C" 
+                                               ColumnWidthMode="Fill" 
+                                               Width="42"></syncfusion:DataGridTextColumn>
+                <syncfusion:DataGridTextColumn MappingName="Points"                                
+                                               HeaderText="P" 
+                                               ColumnWidthMode="Fill" 
+                                               Width="42"></syncfusion:DataGridTextColumn>
+                <syncfusion:DataGridTextColumn MappingName="Finished"                               
+                                               HeaderText="F" 
+                                               ColumnWidthMode="Fill"
+                                               Width="42"></syncfusion:DataGridTextColumn>
+                <syncfusion:DataGridTextColumn MappingName="Scheduled"                                
+                                               HeaderText="S" 
+                                               ColumnWidthMode="Fill" 
+                                               Width="42"></syncfusion:DataGridTextColumn>
+            </syncfusion:SfDataGrid.Columns>
+            
+        </syncfusion:SfDataGrid>
+    </ContentPage.Content>
+</ContentPage>
