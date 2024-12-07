@@ -26,7 +26,6 @@ namespace LeagueMAUI.Services
                 PropertyNameCaseInsensitive = true,
             };
         }
-
         public async Task<ApiResponse<bool>> Register(string firstName, string lastName, string email,
                                                       string phoneNumber, string password, string confirm)
         {
@@ -55,9 +54,6 @@ namespace LeagueMAUI.Services
                         ErrorMessage = $"Error sending HTTP request: {response.StatusCode}"
                     };
                 }
-
-                //var successMessage = $"User registered successfully, confirm e-mail, the instruction has been sent to: {email}";
-                //_logger.LogInformation(successMessage);
 
                 return new ApiResponse<bool> { Data = true };
             }
@@ -111,6 +107,35 @@ namespace LeagueMAUI.Services
             }
         }
 
+        public async Task<ApiResponse<bool>> UploadImageUser(byte[] imageArray)
+        {
+            try
+            {
+                var content = new MultipartFormDataContent();
+                content.Add(new ByteArrayContent(imageArray), "file", "image.jpg");
+                var token = Preferences.Get("accesstoken", string.Empty);
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var response = await PostRequest("api/Account/UploadPhoto", content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    string errorMessage = response.StatusCode == HttpStatusCode.Unauthorized
+                      ? "Unauthorized"
+                      : $"Erro ao enviar requisição HTTP: {response.StatusCode}";
+
+                    _logger.LogError($"Error sending HTTP request: {response.StatusCode}");
+                    return new ApiResponse<bool> { ErrorMessage = errorMessage };
+                }
+                return new ApiResponse<bool> { Data = true };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error uploading user image: {ex.Message}");
+                return new ApiResponse<bool> { ErrorMessage = ex.Message };
+            }
+        }
+
         private async Task<HttpResponseMessage> PostRequest(string uri, HttpContent content)
         {
             var enderecoUrl = AppConfig.BaseUrl + uri;
@@ -121,8 +146,8 @@ namespace LeagueMAUI.Services
             }
             catch (Exception ex)
             {
-                // Log o erro ou trate conforme necessário
-                _logger.LogError($"Erro ao enviar requisição POST para {uri}: {ex.Message}");
+                // Log the error or treat as necessary
+                _logger.LogError($"Error sending POST request to {uri}: {ex.Message}");
                 return new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
         }
@@ -146,6 +171,31 @@ namespace LeagueMAUI.Services
             string endpoint = $"api/Clubs/GetPlayersByClub/{clubId}";
 
             return await GetAsync<List<Player>>(endpoint);
+        }
+
+        public async Task<(List<Round>? Rounds, string? ErrorMessage)> GetRounds()
+        {
+            string endpoint = $"api/Matches/GetRounds";
+
+            return await GetAsync<List<Round>>(endpoint);
+        }
+
+        public async Task<(List<Match>? Matches, string? ErrorMessage)> GetMatches(int roundId)
+        {
+            string endpoint = $"api/Matches/GetMatchesByRound/{roundId}";
+
+            return await GetAsync<List<Match>>(endpoint);
+        }
+
+        public async Task<(ImageProfile? ImageProfile, string? ErrorMessage)> GetImageUserProfile(string email)
+        {
+            string endpoint = $"api/Account/GetUserImage/{email}";
+            return await GetAsync<ImageProfile>(endpoint);
+        }
+
+        public async Task<(UserInfo? UserInfo, string? ErrorMessage)> GetUserInfo(string userId)
+        {
+            return await GetAsync<UserInfo>($"api/Account/GetUserInfo/{userId}");
         }
 
         private async Task<(T? Data, string? ErrorMessage)> GetAsync<T>(string endpoint)

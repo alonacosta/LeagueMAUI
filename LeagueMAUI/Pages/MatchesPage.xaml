@@ -3,10 +3,51 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LeagueMAUI.Pages.MatchesPage"
              Title="Matches">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout>
+            <ActivityIndicator x:Name="loadRoundIndicator"
+             IsRunning="false"
+             IsVisible="false"
+             Color="#212529"
+             HorizontalOptions="Center"
+             VerticalOptions="Center" />
+
+            <CollectionView x:Name="CvRounds"                            
+                     SelectionMode="Single"
+                     Margin="10"
+                     SelectionChanged="CvRounds_SelectionChanged">
+
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical"
+                             Span="2"
+                             HorizontalItemSpacing="10"
+                             VerticalItemSpacing="10" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border VerticalOptions="Start"
+                         StrokeShape="RoundRectangle 15,15,15,15"
+                         Padding="10">
+                            <Grid RowSpacing="3"
+                           RowDefinitions="Auto,Auto,Auto">                                
+                                <Label Grid.Row="0"
+                                FontAttributes="Bold"
+                                FontSize="15" 
+                                LineBreakMode="WordWrap"
+                                MaxLines="2" 
+                                Text="{Binding Name}" />
+                                <Label Grid.Row="1"                 
+                                FontSize="12"
+                                MaxLines="2" 
+                                HeightRequest="40"
+                                LineBreakMode="WordWrap"
+                                Text="{Binding DateStart, StringFormat='{}{0:dd/MM/yyyy}'}"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

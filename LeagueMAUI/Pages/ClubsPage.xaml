@@ -32,34 +32,22 @@
                             <Grid RowSpacing="3"
                               RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
                                 <Image Aspect="AspectFit"
-                                   HeightRequest="120"                                    
+                                   HeightRequest="80"                                    
                                    Source="{Binding ImageFullPath}"/>
                                 <Label Grid.Row="1"
                                    FontAttributes="Bold"
                                    FontSize="15" 
                                    LineBreakMode="WordWrap"
                                    MaxLines="2" 
+                                   HorizontalOptions="Center"
                                    Text="{Binding Name}" />
-                                <Label Grid.Row="2"                 
-                                   FontSize="14"
+                                <!--<Label Grid.Row="2"                 
+                                   FontSize="13"
                                    MaxLines="2" 
-                                  HeightRequest="40"
+                                   HeightRequest="40"
+                                   HorizontalOptions="Center"
                                    LineBreakMode="WordWrap"
-                                   Text="{Binding Stadium}"/>
-                                <!--<Label Grid.Row="3"                 
-                                   FontSize="14"   
-                                   Text="{Binding Capacity}"/>
-                            <Label Grid.Row="4"                 
-                                    FontSize="14"   
-                                     Text="{Binding HeadCoach}"/>-->
-                                <!--<Button Grid.Row="5"
-                                    Text="Team"
-                                    x:Name="BtnTeam"
-                                    FontAttributes="Bold"
-                                    BackgroundColor="#212529"
-                                    Clicked="BtnTeam_Clicked" 
-                                    CommandParameter="{Binding Id}"
-                                    />-->
+                                   Text="{Binding Stadium}"/>-->                                
                             </Grid>
                         </Border>
                     </DataTemplate>

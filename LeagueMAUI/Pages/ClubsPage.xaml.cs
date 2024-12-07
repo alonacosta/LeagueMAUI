@@ -88,10 +88,5 @@ public partial class ClubsPage : ContentPage
         Navigation.PushAsync(new ClubDetailsPage(_apiService, _validator, currentSelection));
 
         ((CollectionView)sender).SelectedItem = null;
-    }
-
-    //private void BtnTeam_Clicked(object sender, EventArgs e)
-    //{
-
-    //}
+    }    
 }

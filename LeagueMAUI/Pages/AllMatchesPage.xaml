@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LeagueMAUI.Pages.AllMatchesPage"
+             Title="AllMatchesPage">
+    <ScrollView>
+        <VerticalStackLayout>
+            <ActivityIndicator x:Name="loadIndicator"
+            IsRunning="false"
+            IsVisible="false"
+            Color="#212529"
+            HorizontalOptions="Center"
+            VerticalOptions="Center" />
+
+            <CollectionView x:Name="CvMatches"                            
+                    SelectionMode="Single"
+                    Margin="10"
+                    SelectionChanged="CvMatches_SelectionChanged">
+
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical"
+                            Span="1"
+                            HorizontalItemSpacing="10"
+                            VerticalItemSpacing="10" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border VerticalOptions="Start" 
+                        StrokeShape="RoundRectangle 15,15,15,15"
+                        Padding="10">
+                            <Grid RowSpacing="3"
+                          RowDefinitions="Auto,Auto,Auto"
+                                  ColumnDefinitions="2* ,5*, 5*">
+                                <Label Grid.Row="0" Grid.ColumnSpan="3"                
+                                       FontSize="14"
+                                       MaxLines="2" 
+                                       HeightRequest="40"
+                                       LineBreakMode="WordWrap"
+                                       Text="{Binding StartDate, StringFormat='{}{0:dd/MM/yyyy HH:mm}'}"/>
+                                <Image Grid.Row="1" Grid.Column="0"
+                                       Aspect="AspectFit"
+                                       HeightRequest="25"   
+                                       HorizontalOptions="Center"
+                                       Source="{Binding ImageHomeTeamUrl}"/>
+                                <Label Grid.Row="1" Grid.Column="1"
+                                       FontAttributes="Bold"
+                                       FontSize="14" 
+                                       LineBreakMode="WordWrap"
+                                       MaxLines="2" 
+                                       HorizontalOptions="Start"
+                                       Text="{Binding HomeTeam}" />
+                                <Label Grid.Row="1" Grid.Column="2"                
+                                       FontSize="14"
+                                       MaxLines="2" 
+                                       HeightRequest="30"
+                                       LineBreakMode="WordWrap"
+                                       HorizontalOptions="Start"
+                                       Text="{Binding HomeScore}"/>
+                                <Image Aspect="AspectFit" Grid.Row="2" Grid.Column="0"
+                                       HeightRequest="25"  
+                                       HorizontalOptions="Center"
+                                       Source="{Binding ImageAwayTeamUrl}"/>
+                                <Label Grid.Row="2" Grid.Column="1"
+                                       FontAttributes="Bold"
+                                       FontSize="14" 
+                                       LineBreakMode="WordWrap"
+                                       MaxLines="2" 
+                                       Text="{Binding AwayTeam}" />
+                                <Label Grid.Row="2" Grid.Column="2"               
+                                       FontSize="14"
+                                       MaxLines="2" 
+                                       HeightRequest="30"
+                                       LineBreakMode="WordWrap"
+                                       Text="{Binding AwayScore}"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
