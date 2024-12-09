@@ -107,6 +107,81 @@ namespace LeagueMAUI.Services
             }
         }
 
+        public async Task<ApiResponse<bool>> RecoverPassword(string email)
+        {
+            try
+            {
+                var recover = new RecoverPassword()
+                {
+                    Email = email                    
+                };
+
+                var json = JsonSerializer.Serialize(recover, _serializerOptions);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await PostRequest("api/Account/RecoverPassword", content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    _logger.LogError($"Error sending HTTP request : {response.StatusCode}");
+                    return new ApiResponse<bool>
+                    {
+                        ErrorMessage = $"Error sending HTTP request : {response.StatusCode}"
+                    };
+                }
+
+                //var jsonResult = await response.Content.ReadAsStringAsync();
+                //var result = JsonSerializer.Deserialize<Token>(jsonResult, _serializerOptions);
+
+                //Preferences.Set("accesstoken", result!.AccessToken);
+                //Preferences.Set("userid", result.UserId!);
+                //Preferences.Set("username", result.UserName);
+                //Preferences.Set("name", result.Name);
+
+                return new ApiResponse<bool> { Data = true };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Recover Password error : {ex.Message}");
+                return new ApiResponse<bool> { ErrorMessage = ex.Message };
+            }
+        }
+
+        //public async Task<ApiResponse<bool>> ResetPassword(string email, string password, string confirm, string token)
+        //{
+        //    try
+        //    {
+        //        var reset = new ResetOldPassword()
+        //        {                  
+        //            Username = email,                    
+        //            Password = password,
+        //            ConfirmPassword = confirm,
+        //            Token = token
+        //        };
+
+        //        var json = JsonSerializer.Serialize(reset, _serializerOptions);
+        //        var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        //        var response = await PostRequest("api/Account/ResetOldPassword", content);
+
+        //        if (!response.IsSuccessStatusCode)
+        //        {
+        //            _logger.LogError($"Error sending HTTP request: {response.StatusCode}");
+        //            return new ApiResponse<bool>
+        //            {
+        //                ErrorMessage = $"Error sending HTTP request: {response.StatusCode}"
+        //            };
+        //        }
+
+        //        return new ApiResponse<bool> { Data = true };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError($"User registration error: {ex.Message}");
+        //        return new ApiResponse<bool> { ErrorMessage = ex.Message };
+        //    }
+        //}
+
         public async Task<ApiResponse<bool>> UploadImageUser(byte[] imageArray)
         {
             try

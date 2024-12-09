@@ -1,3 +1,4 @@
+using LeagueMAUI.Models;
 using LeagueMAUI.Services;
 using LeagueMAUI.Validations;
 
@@ -40,8 +41,8 @@ public partial class LoginPage : ContentPage
         }
     }
 
-    private void TapRecoverPassword_Tapped(object sender, TappedEventArgs e)
+    private async void TapRecoverPassword_Tapped(object sender, TappedEventArgs e)
     {
-
+        await Navigation.PushAsync(new RecoverPasswordPage(_apiService, _validator));
     }
 }

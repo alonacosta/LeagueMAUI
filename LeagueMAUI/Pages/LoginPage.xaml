@@ -8,7 +8,7 @@
        RowSpacing="20"
        Margin="20, 150, 20, 40">
         <Image Grid.Row="0"
-            Source="gymstart.png"
+            Source="ball.svg"
             Aspect="AspectFit"
             HeightRequest="100"
             WidthRequest="100"/>
