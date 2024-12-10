@@ -273,6 +273,11 @@ namespace LeagueMAUI.Services
             return await GetAsync<UserInfo>($"api/Account/GetUserInfo/{userId}");
         }
 
+        public async Task<(Role? Role, string? ErrorMessage)> GetUserRole(string email)
+        {
+            return await GetAsync<Role>($"api/Account/GetUserRole/{email}");
+        }
+
         private async Task<(T? Data, string? ErrorMessage)> GetAsync<T>(string endpoint)
         {
             try

@@ -8,11 +8,13 @@ public partial class LoginPage : ContentPage
 {
     private readonly ApiService _apiService;
     private readonly IValidator _validator;
+    private string _roleName;
+
     public LoginPage(ApiService apiService, IValidator validator)
     {
         InitializeComponent();
         _apiService = apiService;
-        _validator = validator;
+        _validator = validator;       
     }
 
     private async void BtnSignIn_Clicked(object sender, EventArgs e)
@@ -33,11 +35,39 @@ public partial class LoginPage : ContentPage
 
         if (!response.HasError)
         {
-            Application.Current!.MainPage = new AppShell(_apiService, _validator);
+            var role = await GetRoleAsync(EntEmail.Text);
+            _roleName = role.RoleName;
+            Application.Current!.MainPage = new AppShell(_apiService, _validator, _roleName);
         }
         else
         {
             await DisplayAlert("Error", "Something's gone wrong", "Cancel");
+        }
+    }
+
+    public async Task<Role> GetRoleAsync(string username)
+    {
+        try
+        {
+            var (role, errorMessage) = await _apiService.GetUserRole(EntEmail.Text);
+
+            //if (errorMessage == "Unauthorized" && !_loginPageDisplayed)
+            //{
+            //    await DisplayLoginPage();
+            //    return null;  // Ou o valor padrão, conforme sua lógica
+            //}
+            //if (errorMessage == "NotFound")
+            //{
+            //    await DisplayAlert("Alert", "No clubs found.", "OK");
+            //    return null;  // Ou outra lógica adequada
+            //}
+            //_roleName = role.RoleName;
+            return role;  
+        }
+        catch (Exception)
+        {
+            await DisplayAlert("Error", "There was an error retrieving the orders. Please try again later.", "OK");
+            return null;
         }
     }
 

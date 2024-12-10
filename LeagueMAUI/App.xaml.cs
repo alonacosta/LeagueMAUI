@@ -29,7 +29,7 @@ namespace LeagueMAUI
                 return;
             }
 
-            MainPage = new AppShell(_apiService, _validator);
+            MainPage = new AppShell(_apiService, _validator, "");
         }
     }
 }
