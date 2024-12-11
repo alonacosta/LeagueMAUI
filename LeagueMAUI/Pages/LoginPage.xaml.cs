@@ -37,6 +37,7 @@ public partial class LoginPage : ContentPage
         {
             var role = await GetRoleAsync(EntEmail.Text);
             _roleName = role.RoleName;
+            Preferences.Set("role", role.RoleName);
             Application.Current!.MainPage = new AppShell(_apiService, _validator, _roleName);
         }
         else
@@ -50,18 +51,7 @@ public partial class LoginPage : ContentPage
         try
         {
             var (role, errorMessage) = await _apiService.GetUserRole(EntEmail.Text);
-
-            //if (errorMessage == "Unauthorized" && !_loginPageDisplayed)
-            //{
-            //    await DisplayLoginPage();
-            //    return null;  // Ou o valor padrão, conforme sua lógica
-            //}
-            //if (errorMessage == "NotFound")
-            //{
-            //    await DisplayAlert("Alert", "No clubs found.", "OK");
-            //    return null;  // Ou outra lógica adequada
-            //}
-            //_roleName = role.RoleName;
+            
             return role;  
         }
         catch (Exception)
@@ -74,5 +64,10 @@ public partial class LoginPage : ContentPage
     private async void TapRecoverPassword_Tapped(object sender, TappedEventArgs e)
     {
         await Navigation.PushAsync(new RecoverPasswordPage(_apiService, _validator));
+    }
+
+    private async void TapRegister_Tapped(object sender, TappedEventArgs e)
+    {
+        await Navigation.PushAsync(new RegisterPage(_apiService, _validator));
     }
 }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LeagueMAUI.Pages.AboutAuthorPage"
+             Title="About Author"
+             Padding="15">
+ 
+    <Border VerticalOptions="Center"
+           StrokeShape="RoundRectangle 15,15,15,15"
+           Padding="10, 20">
+        <Grid Padding="5" RowSpacing="20"
+              RowDefinitions="Auto, Auto">
+
+            <!-- Frame para a imagem -->
+            <Frame Grid.Row="0"
+                   WidthRequest="150" HeightRequest="150"
+                   CornerRadius="35"
+                   IsClippedToBounds="True"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center">
+                <Image 
+                    WidthRequest="250" HeightRequest="200"
+                    Aspect="AspectFit"
+                    Source="img.jpg" />
+            </Frame>
+            
+            <StackLayout Grid.Row="1"
+                         VerticalOptions="Center"
+                         HorizontalOptions="Center">
+                <Label Text="Alona Mytkevych Costa"
+                       FontSize="15"
+                       FontAttributes="Bold"
+                       TextColor="Black"
+                       HorizontalOptions="Center"/>
+                <Label Text="CET.TPSI.D.L.87"
+                       FontSize="13"                    
+                       TextColor="Black"
+                       HorizontalOptions="Center"/>
+                <Label Text="App Football League "
+                       FontSize="13"
+                       TextColor="Gray"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       Margin="0,8,0,0"/>
+                <Label Text="v 1.0.0 "
+                       FontSize="12"
+                       TextColor="Gray"
+                       HorizontalOptions="Center"/>
+                <Label Text="About Project"
+                       FontSize="14"
+                       Margin="0,20, 0, 5"
+                       FontAttributes="Bold"
+                       TextColor="Black"
+                       HorizontalOptions="Center"/>
+                <Label Text="As part of the Mobile Application Development training unit, a mobile application was developed to integrate into the web project of an information system for Liga NOS, using .NET MAUI."
+                       FontSize="13"
+                       TextColor="Black"
+                       HorizontalOptions="CenterAndExpand"/>
+            </StackLayout>
+        </Grid>
+    </Border>
+</ContentPage>

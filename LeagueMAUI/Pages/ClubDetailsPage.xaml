@@ -51,8 +51,7 @@
 
             <CollectionView x:Name="CvPlayers" Grid.Row="1" Margin="15,5">
                 <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Horizontal"
-                        
+                    <GridItemsLayout Orientation="Horizontal"                        
                         HorizontalItemSpacing="10"
                         VerticalItemSpacing="10" />
                 </CollectionView.ItemsLayout>

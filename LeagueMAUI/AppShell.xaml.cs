@@ -62,8 +62,5 @@ namespace LeagueMAUI
 
             Items.Add(tabBar);
         }
-        
-           
-        
     }
 }

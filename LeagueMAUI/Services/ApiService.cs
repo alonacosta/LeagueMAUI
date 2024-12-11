@@ -147,41 +147,6 @@ namespace LeagueMAUI.Services
             }
         }
 
-        //public async Task<ApiResponse<bool>> ResetPassword(string email, string password, string confirm, string token)
-        //{
-        //    try
-        //    {
-        //        var reset = new ResetOldPassword()
-        //        {                  
-        //            Username = email,                    
-        //            Password = password,
-        //            ConfirmPassword = confirm,
-        //            Token = token
-        //        };
-
-        //        var json = JsonSerializer.Serialize(reset, _serializerOptions);
-        //        var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-        //        var response = await PostRequest("api/Account/ResetOldPassword", content);
-
-        //        if (!response.IsSuccessStatusCode)
-        //        {
-        //            _logger.LogError($"Error sending HTTP request: {response.StatusCode}");
-        //            return new ApiResponse<bool>
-        //            {
-        //                ErrorMessage = $"Error sending HTTP request: {response.StatusCode}"
-        //            };
-        //        }
-
-        //        return new ApiResponse<bool> { Data = true };
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError($"User registration error: {ex.Message}");
-        //        return new ApiResponse<bool> { ErrorMessage = ex.Message };
-        //    }
-        //}
-
         public async Task<ApiResponse<bool>> UploadImageUser(byte[] imageArray)
         {
             try
@@ -207,6 +172,70 @@ namespace LeagueMAUI.Services
             catch (Exception ex)
             {
                 _logger.LogError($"Error uploading user image: {ex.Message}");
+                return new ApiResponse<bool> { ErrorMessage = ex.Message };
+            }
+        }
+
+        public async Task<ApiResponse<bool>> UploadImagePlayer(byte[] imageArray, int playerId)
+        {
+            try
+            {
+                var content = new MultipartFormDataContent();
+                content.Add(new ByteArrayContent(imageArray), "file", "image.jpg");
+                content.Add(new StringContent(playerId.ToString()), "playerId");
+                //var content = new MultipartFormDataContent
+                //{
+                //    { new ByteArrayContent(imageArray), "file", "image.jpg" },
+                //    { new StringContent(playerId.ToString()), "playerId" }
+                //};
+                //var content = new MultipartFormDataContent();
+                //content.Add(new ByteArrayContent(imageArray), "file", "image.jpg");
+                var token = Preferences.Get("accesstoken", string.Empty);
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var response = await PostRequest("api/Clubs/UploadPhotoPlayer", content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    string errorMessage = response.StatusCode == HttpStatusCode.Unauthorized
+                      ? "Unauthorized"
+                      : $"Erro ao enviar requisição HTTP: {response.StatusCode}";
+
+                    _logger.LogError($"Error sending HTTP request: {response.StatusCode}");
+                    return new ApiResponse<bool> { ErrorMessage = errorMessage };
+                }
+                return new ApiResponse<bool> { Data = true };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error uploading player image: {ex.Message}");
+                return new ApiResponse<bool> { ErrorMessage = ex.Message };
+            }
+        }
+
+        public async Task<ApiResponse<bool>> CreatePlayerAsync(PlayerIn player)
+        {
+            try
+            {
+                var json = JsonSerializer.Serialize(player, _serializerOptions);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await PostRequest("api/Clubs/CreatePlayer", content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    _logger.LogError($"Error sending HTTP request: {response.StatusCode}");
+                    return new ApiResponse<bool>
+                    {
+                        ErrorMessage = $"Error sending HTTP request: {response.StatusCode}"
+                    };
+                }
+
+                return new ApiResponse<bool> { Data = true };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Player registration error: {ex.Message}");
                 return new ApiResponse<bool> { ErrorMessage = ex.Message };
             }
         }
@@ -274,8 +303,15 @@ namespace LeagueMAUI.Services
         }
 
         public async Task<(Role? Role, string? ErrorMessage)> GetUserRole(string email)
-        {
+        {            
             return await GetAsync<Role>($"api/Account/GetUserRole/{email}");
+        }
+
+        public async Task<(List<Position>? Positions, string? ErrorMessage)> GetPositions()
+        {
+            string endpoint = $"api/Clubs/GetPlayersPositions";
+
+            return await GetAsync<List<Position>>(endpoint);
         }
 
         private async Task<(T? Data, string? ErrorMessage)> GetAsync<T>(string endpoint)
@@ -324,6 +360,115 @@ namespace LeagueMAUI.Services
                 string errorMessage = $"Unexpected error: {ex.Message}";
                 _logger.LogError(ex, errorMessage);
                 return (default, errorMessage);
+            }
+        }
+
+        public async Task<(bool Data, string? ErrorMessage)> UpdatePlayerAsync(int playerId, PlayerIn player)
+        {
+            try
+            {
+                var json = JsonSerializer.Serialize(player, _serializerOptions);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await PutRequest($"api/Clubs/UpdatePlayer?playerId={playerId}", content);
+
+                //var content = new StringContent(string.Empty, Encoding.UTF8, "application/json");
+                //var response = await PutRequest($"api/Clubs/UpdatePlayer?playerId={playerId}", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    return (true, null);
+                }
+                else
+                {
+                    if (response.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        string errorMessage = "Unauthorized";
+                        _logger.LogWarning(errorMessage);
+                        return (false, errorMessage);
+                    }
+                    string generalErrorMessage = $"Erro na requisição: {response.ReasonPhrase}";
+                    _logger.LogError(generalErrorMessage);
+                    return (false, generalErrorMessage);
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                string errorMessage = $"Erro de requisição HTTP: {ex.Message}";
+                _logger.LogError(ex, errorMessage);
+                return (false, errorMessage);
+            }
+            catch (Exception ex)
+            {
+                string errorMessage = $"Erro inesperado: {ex.Message}";
+                _logger.LogError(ex, errorMessage);
+                return (false, errorMessage);
+            }
+        }
+
+        private async Task<HttpResponseMessage> PutRequest(string uri, HttpContent content)
+        {
+            var enderecoUrl = AppConfig.BaseUrl + uri;
+            try
+            {
+                AddAuthorizationHeader();
+                var result = await _httpClient.PutAsync(enderecoUrl, content);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error sending PUT request to {uri}: {ex.Message}");
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            }
+        }
+
+        public async Task<(bool Data, string? ErrorMessage)> DeletePlayerAsync(int playerId)
+        {
+            try
+            {
+                var response = await DeleteRequest($"api/Clubs/DeletePlayer?playerId={playerId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    return (true, null);
+                }
+                else
+                {
+                    if (response.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        string errorMessage = "Unauthorized";
+                        _logger.LogWarning(errorMessage);
+                        return (false, errorMessage);
+                    }
+                    string generalErrorMessage = $"Erro na requisição: {response.ReasonPhrase}";
+                    _logger.LogError(generalErrorMessage);
+                    return (false, generalErrorMessage);
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                string errorMessage = $"Erro de requisição HTTP: {ex.Message}";
+                _logger.LogError(ex, errorMessage);
+                return (false, errorMessage);
+            }
+            catch (Exception ex)
+            {
+                string errorMessage = $"Erro inesperado: {ex.Message}";
+                _logger.LogError(ex, errorMessage);
+                return (false, errorMessage);
+            }
+        }
+
+        private async Task<HttpResponseMessage> DeleteRequest(string uri)
+        {
+            var enderecoUrl = AppConfig.BaseUrl + uri;
+            try
+            {
+                var result = await _httpClient.DeleteAsync(enderecoUrl);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                // Log the error or handle as needed
+                _logger.LogError($"Error sending DELETE request to {uri}: {ex.Message}");
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
         }
 

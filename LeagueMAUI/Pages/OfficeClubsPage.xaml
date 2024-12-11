@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LeagueMAUI.Pages.OfficeClubsPage"
+             Title="Clubs">
+    <ScrollView>
+        <VerticalStackLayout>
+            <ActivityIndicator x:Name="loadIndicator"
+             IsRunning="false"
+             IsVisible="false"
+             Color="#212529"
+             HorizontalOptions="Center"
+             VerticalOptions="Center" />
+
+            <CollectionView x:Name="CvClubs"                            
+                     SelectionMode="Single"
+                     Margin="10"
+                     SelectionChanged="CvClubs_SelectionChanged">
+
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical"
+                             Span="1"
+                             HorizontalItemSpacing="10"
+                             VerticalItemSpacing="10" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border VerticalOptions="Start"
+                         StrokeShape="RoundRectangle 15,15,15,15"
+                         Padding="10">
+                            <Grid RowSpacing="3"
+                                 ColumnDefinitions="2*,8*">
+                                <Image Aspect="AspectFit" 
+                                       Grid.Column="0"
+                                       HeightRequest="30"                                          
+                                       Source="{Binding ImageFullPath}"/>
+                                <Label Grid.Column="1"
+                                       FontAttributes="Bold"
+                                       FontSize="15" 
+                                       LineBreakMode="WordWrap"
+                                       MaxLines="2" 
+                                       HorizontalOptions="Start"
+                                       Text="{Binding Name}" />                               
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

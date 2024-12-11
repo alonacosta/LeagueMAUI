@@ -143,4 +143,9 @@ public partial class ProfilePage : ContentPage
         Preferences.Set("accesstoken", string.Empty);
         Application.Current!.MainPage = new NavigationPage(new LoginPage(_apiService, _validator));
     }
+
+    private void TabAboutAuthor_Tapped(object sender, TappedEventArgs e)
+    {
+        Navigation.PushAsync(new AboutAuthorPage(_apiService, _validator));
+    }
 }

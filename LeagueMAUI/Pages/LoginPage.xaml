@@ -4,14 +4,14 @@
              x:Class="LeagueMAUI.Pages.LoginPage"
              Title="LoginPage"
              NavigationPage.HasNavigationBar="False">
-    <Grid RowDefinitions="Auto, Auto, Auto, Auto, *"
+    <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, *"
        RowSpacing="20"
        Margin="20, 150, 20, 40">
         <Image Grid.Row="0"
             Source="ball.svg"
             Aspect="AspectFit"
-            HeightRequest="100"
-            WidthRequest="100"/>
+            HeightRequest="80"
+            WidthRequest="80"/>
         <Label Grid.Row="1"
             Text="Welcome to Football League!"
             TextColor="#343a40"
@@ -49,6 +49,19 @@
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer x:Name="TapRecoverPassword"
                             Tapped="TapRecoverPassword_Tapped"/>
+                </Label.GestureRecognizers>
+            </Label>
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout Grid.Row="5"
+         Spacing="2"
+         HorizontalOptions="Center"
+         VerticalOptions="EndAndExpand">
+            <Label Text="Don't have an account ? " TextColor="#343a40" />
+            <Label Text="Register" TextColor="#ff0046" FontAttributes="Bold">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer x:Name="TapRegister"
+                    Tapped="TapRegister_Tapped"/>
                 </Label.GestureRecognizers>
             </Label>
         </HorizontalStackLayout>

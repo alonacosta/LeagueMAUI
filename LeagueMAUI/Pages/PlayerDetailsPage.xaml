@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LeagueMAUI.Pages.PlayerDetailsPage"
+             Title="Player Details">
+
+    <ScrollView>
+        <StackLayout Padding="20" Spacing="15">
+            <ImageButton Source="user_profile.png"
+                         HeightRequest="120"
+                         WidthRequest="110"
+                         Aspect="AspectFill"
+                         CornerRadius="30"
+                         HorizontalOptions="Center" 
+                         Margin="0,0,0,20"
+                         x:Name="ImgBtnPlayer"
+                         Clicked="ImgBtnPlayer_Clicked"/>            
+            <Label Text="Player Name" 
+                   FontSize="16"
+                   FontAttributes="Bold"/>
+            <Entry x:Name="EntPlayerName" Placeholder="Enter player name" />
+
+            <Label Text="Position" 
+                   FontSize="16"
+                   FontAttributes="Bold"/>
+            <Picker x:Name="PickerPosition"
+                 Title="Select one position"
+                 ItemDisplayBinding="{Binding Name}" />
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="5">
+                <Button Grid.Column="0"
+                        Text="Edit"
+                        x:Name="EditPlayer"
+                        BackgroundColor="#343A40"
+                        Clicked="EditPlayer_Clicked"
+                    />
+                <Button Grid.Column="1"
+                        Text="Delete"
+                        x:Name="DeletePlayer"
+                        BackgroundColor="#ff0046"
+                        Clicked="DeletePlayer_Clicked"
+                     />
+            </Grid>
+            
+        </StackLayout>
+    </ScrollView>
+    <!--<VerticalStackLayout>
+        <Grid RowDefinitions="Auto, Auto, Auto" 
+              ColumnDefinitions="*, *" 
+              Margin="20" 
+              RowSpacing="8"
+              ColumnSpacing="15">
+            <Image Grid.Row="0" Grid.ColumnSpan="2"
+                x:Name="ImagePlayer"
+                HeightRequest="100"
+                Aspect="AspectFit"
+                Margin="0, 15, 0, 0" />
+            <Label Grid.Row="1" 
+               Grid.ColumnSpan="2" 
+               x:Name="LblNamePlayer" 
+               HorizontalOptions="Center"
+               FontAttributes="Bold"
+               FontSize="18"             
+               Margin="0,15"/>
+            <Label Grid.Row="2" 
+               Grid.ColumnSpan="2" 
+               x:Name="LblPositionPlayer" 
+               HorizontalOptions="Center"               
+               FontSize="16"             
+               Margin="0,15"/>
+
+            --><!--<Label Grid.Row="2" Grid.Column="0"
+         Text="Stadium"
+         FontAttributes="Bold"/>
+            <Label Grid.Row="2" Grid.Column="1"
+         x:Name="LblStadium" />
+
+            <Label Grid.Row="3" Grid.Column="0"
+         Text="Capacity"
+         FontAttributes="Bold"/>
+            <Label Grid.Row="3" Grid.Column="1"
+          x:Name="LblCapacity" />
+
+            <Label Grid.Row="4" Grid.Column="0"
+          Text="Head Coach"
+          FontAttributes="Bold"/>
+            <Label Grid.Row="4" Grid.Column="1"
+          x:Name="LblHeadCoach" />--><!--
+        </Grid>
+
+        
+    </VerticalStackLayout>-->
+</ContentPage>

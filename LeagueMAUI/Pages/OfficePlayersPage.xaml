@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LeagueMAUI.Pages.OfficePlayersPage"
+             Title="Players">
+    <VerticalStackLayout>
+        <Button x:Name="BtnCreate"
+                Text="Add Player"
+                Margin="5, 10, 15, 2"
+                Padding="30,5"
+                VerticalOptions="Center"
+                HorizontalOptions="End"
+                BackgroundColor="#343A40"
+                Clicked="BtnCreate_Clicked"/>
+        <CollectionView x:Name="CvPlayersList"
+                            SelectionMode="Single"
+                            Margin="15,10"
+                            SelectionChanged="CvPlayersList_SelectionChanged">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" 
+                                     Span="1"
+                    HorizontalItemSpacing="5"
+                    VerticalItemSpacing="5" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border VerticalOptions="Center"
+                          StrokeShape="RoundRectangle 15,15,15,15"
+                          Padding="5, 0"
+                         >
+                            <Grid 
+                                  RowSpacing="10"                              
+                                  RowDefinitions="Auto, Auto"
+                                  ColumnDefinitions="2*,7*">
+
+                                <Frame Grid.Row="0" 
+                                       Grid.Column="0"
+                                       WidthRequest="50" 
+                                       HeightRequest="50"
+                                       CornerRadius="25"
+                                       IsClippedToBounds="True"
+                                       HorizontalOptions="Start"
+                                       Margin="0, 7, 0, 0">
+                                    <Image 
+                                     WidthRequest="50" HeightRequest="50"
+                                     Aspect="AspectFit"                                       
+                                     Source="{Binding ImageUrl}"
+                                     />
+                                </Frame>
+
+                                <StackLayout Grid.Row="0" 
+                                             Grid.Column="1"                                        
+                                             HorizontalOptions="Start"
+                                             VerticalOptions="Center">
+                                    <Label Text="{Binding Name}"
+                                       FontSize="15"
+                                       FontAttributes="Bold"
+                                       TextColor="Black" />
+                                    <Label Text="{Binding PositionName}"
+                                       FontSize="13"
+                                       TextColor="Gray" />
+                                </StackLayout>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+       
+    </VerticalStackLayout>
+</ContentPage>
